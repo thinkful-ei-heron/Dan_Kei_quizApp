@@ -60,7 +60,7 @@ function renderOptionsHtml() {
 
 function submitAnswer() {
   console.log('In submitAnswer');
-  $('#answerForm').on('submit', event => {
+  $('.main').on('submit', '#answerForm', function (event) {
     console.log('Form submitted');
     // this stops the default form submission behavior
     event.preventDefault();
