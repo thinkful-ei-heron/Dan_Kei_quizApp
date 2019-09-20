@@ -49,8 +49,8 @@ function renderOptionsHtml() {
   optionsText.forEach(element => {
     optionsHtml += `
     <div>
-      <input name="ansGroup" id="ans${ans}" type="radio" />
-      <label for="ans${ans}">${element}</label>
+      <input name="ansGroup" id="ans${ans}" type="radio" value ="${element}"/>
+      <label for="ans${ans}" ><span>${element}</span></label>
     </div>
     `;
     ans++;
@@ -60,11 +60,34 @@ function renderOptionsHtml() {
 
 function submitAnswer() {
   console.log('In submitAnswer');
-  $('#answerForm').on('submit', event => {
+  let text;
+  $('.main').on('submit', '#answerForm', event => {
     console.log('Form submitted');
     // this stops the default form submission behavior
     event.preventDefault();
-    const text = $('input[ansGroup]:checked').val();
-    console.log(text);
+    text = $('input:checked').val();
+    generateResult(text);
   });
+
+  return text;
+}
+
+function generateResult(val) {
+  let result = getResultHtml(val);
+  $('.main').html(result);
+}
+
+function getResultHtml(val) {
+  let result = checkAnswer(val);
+  return `
+    <p>Your answer was ${result}</p>
+  `;
+}
+
+function checkAnswer(val) {
+  if (val === STORE.questions[STORE.questionNumber].answer) {
+    return 'You are correct';
+  } else {
+    return 'You are wrong';
+  }
 }
