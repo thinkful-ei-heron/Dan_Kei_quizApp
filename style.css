@@ -1,0 +1,35 @@
+body {
+  /*background-image: url('/images/Catch.jpg'); 
+  */
+  background-color: black;
+  color: white;
+}
+
+.banner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.banner img {
+  width: 100px;
+  height: auto;
+}
+
+.banner h1 {
+  width: 100%;
+  margin: 0 auto;
+  font-size: 30px;
+  color: white;
+}
+
+.main form {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}

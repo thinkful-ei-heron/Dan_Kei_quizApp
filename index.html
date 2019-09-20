@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="reset.css" rel="stylesheet" type="text/css" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Kei and Dan W's Quiz App</title>
+  </head>
+  <body>
+    <header role="banner" class="banner">
+      <img src="/images/nflPng.png" alt="NFL Logo" />
+      <h1>NFL Records Quiz</h1>
+    </header>
+
+    <main class="main">
+      <form>
+        <fieldset>
+          <legend class="questionText">
+            <!--call the appropriate question from STORE -->
+            What NFL player holds the career record for passing touchdowns?
+          </legend>
+        </fieldset>
+        <!-- call the function to display answer options-->
+        <div>
+          <input name="ansGroup" id="ans1" type="radio" />
+          <label for="ans1">Peyton Manning</label>
+        </div>
+        <div>
+          <input name="ansGroup" id="ans2" type="radio" />
+          <label for="ans2">Tom Brady</label>
+        </div>
+        <div>
+          <input name="ansGroup" id="ans3" type="radio" />
+          <label for="ans3">Drew Brees</label>
+        </div>
+        <div>
+          <input name="ansGroup" id="ans4" type="radio" />
+          <label for="ans4">Brett Favre</label>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+  </body>
+</html>
