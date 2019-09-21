@@ -5,7 +5,10 @@ function main() {
   loadLanding();
   startQuiz();
   console.log('in main after startquiz');
-  submitAnswer();
+  console.log(submitAnswer());
+  //on click of next button
+  //if there are more questions: generateQuestion(), and then after that, submitAnswer()
+  //if there are no more question: display final results
 }
 
 function loadLanding() {
@@ -21,6 +24,8 @@ function startQuiz() {
     generateQuestion();
   });
 }
+
+
 
 function generateQuestion() {
   let html = renderQuestionHtml() + renderOptionsHtml() + '<button type="submit">Submit</button></form>';
@@ -58,6 +63,7 @@ function renderOptionsHtml() {
   return optionsHtml;
 }
 
+//consider changing the name of this to match what it's actually doing
 function submitAnswer() {
   console.log('In submitAnswer');
   let text;
@@ -66,15 +72,19 @@ function submitAnswer() {
     // this stops the default form submission behavior
     event.preventDefault();
     text = $('input:checked').val();
-    generateResult(text);
+    displayAnswerPage(text);
+    //doesn't need to return anymore
+    return text;
   });
-
-  return text;
+  //return text;
 }
 
-function generateResult(val) {
-  let result = getResultHtml(val);
-  $('.main').html(result);
+function checkAnswer(val) {
+  if (val === STORE.questions[STORE.questionNumber].answer) {
+    return 'correct';
+  } else {
+    return 'wrong';
+  }
 }
 
 function getResultHtml(val) {
@@ -84,10 +94,8 @@ function getResultHtml(val) {
   `;
 }
 
-function checkAnswer(val) {
-  if (val === STORE.questions[STORE.questionNumber].answer) {
-    return 'You are correct';
-  } else {
-    return 'You are wrong';
-  }
+function displayAnswerPage(val) {
+  let result = getResultHtml(val);
+  //we actually need to add a next button here
+  $('.main').html(result);
 }
