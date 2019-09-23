@@ -49,9 +49,9 @@ const STORE = {
       answer: 'Emmitt Smith'
     },
     {
-      question: 'What player holds the record for the most interceptions in a single season?',
-      options: ['Mel Blount', 'Deion Sanders', 'Dick \'Night Train\' Lane', 'Jairus Byrd'],
-      answer: 'Dick \'Night Train\' Lane'
+      question: 'What player holds the record for the most receiving TDs in his career?',
+      options: ['Michael Irvin', 'Randy Moss', 'Terrell Owens', 'Jerry Rice'],
+      answer: 'Jerry Rice'
     }
   ]
 };
