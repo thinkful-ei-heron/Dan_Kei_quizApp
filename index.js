@@ -4,8 +4,8 @@ $(main);
 function main() {
   loadLanding();
   startQuiz();
-  console.log('in main after startquiz');
-  console.log(submitAnswer());
+  submitAnswer();
+  resultToQuestion();
   //on click of next button
   //if there are more questions: generateQuestion(), and then after that, submitAnswer()
   //if there are no more question: display final results
@@ -20,17 +20,12 @@ function loadLanding() {
 
 function startQuiz() {
   $('.startButton').click(function() {
-    console.log('click');
     generateQuestion();
   });
 }
 
-
-
 function generateQuestion() {
   let html = renderQuestionHtml() + renderOptionsHtml() + '<button type="submit">Submit</button></form>';
-  console.log(renderQuestionHtml());
-  console.log(renderOptionsHtml());
   $('.main').html(html);
 }
 
@@ -72,11 +67,10 @@ function submitAnswer() {
     // this stops the default form submission behavior
     event.preventDefault();
     text = $('input:checked').val();
+    console.log(text);
     displayAnswerPage(text);
     //doesn't need to return anymore
-    return text;
   });
-  //return text;
 }
 
 function checkAnswer(val) {
@@ -89,13 +83,32 @@ function checkAnswer(val) {
 
 function getResultHtml(val) {
   let result = checkAnswer(val);
+  console.log('result');
   return `
-    <p>Your answer was ${result}</p>
+  <form id='answerForm'>
+  <fieldset>
+    <legend class="questionText">
+    <p>Your answer was ${val}: you were ${result}</p>
+    <button type="submit">Submit</button>
+    </legend>
+  </fieldset>
+  </form>
   `;
 }
 
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
-  //we actually need to add a next button here
+  console.log('in display answer page');
   $('.main').html(result);
 }
+
+//event handler to display next question
+function resultToQuestion(){
+  $('.main').on('submit', '#answerForm', function(event) {
+    console.log('from result to question');
+    generateQuestion();
+  });
+}
+//function to create final results page 
+
+//function to restart quiz
