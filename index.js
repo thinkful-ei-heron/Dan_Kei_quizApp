@@ -35,7 +35,7 @@ function renderQuestionHtml() {
   const questionText = STORE.questions[STORE.questionNumber].question;
   return `
   <div aria-live= "polite" class="formContainer">
-    <p class="questionNumber">Question: ${(1+STORE.questionNumber)}/10</p>
+    <p class="questionNumber">Question: ${1 + STORE.questionNumber}/10</p>
     <p class="score">Score: ${STORE.score}</p>
     <form id='answerForm'>
     <fieldset>
@@ -84,10 +84,10 @@ function checkAnswer(val) {
 
 function getResultHtml(val) {
   let result = checkAnswer(val);
-  if (result=== 'correct'){
+  if (result === 'correct') {
     return `
     <div aria-live= "polite" class="formContainer">
-      <p class="questionNumber">Question: ${(STORE.questionNumber+1)}/10</p>
+      <p class="questionNumber">Question: ${STORE.questionNumber + 1}/10</p>
       <p class="score">Score: ${STORE.score}</p>
       <form id='resultForm'>
         <fieldset>
@@ -95,6 +95,7 @@ function getResultHtml(val) {
             <p>Your answer was:</p> 
             <p>${val}</p>
             <p>You were ${result}!</p>
+            ${appendImage()}
             <button class= "answerButton" type="submit">Next</button>
           </legend>
         </fieldset>
@@ -104,7 +105,7 @@ function getResultHtml(val) {
   } else {
     return `
   <div aria-live= "polite" class="formContainer">
-    <p class="questionNumber">Question: ${(STORE.questionNumber+1)}/10</p>
+    <p class="questionNumber">Question: ${STORE.questionNumber + 1}/10</p>
     <p class="score">Score: ${STORE.score}</p>
     <form id='resultForm'>
       <fieldset>
@@ -114,6 +115,7 @@ function getResultHtml(val) {
           <p>You were ${result}!</p>
           <p>The correct answer was:</p>
           <p>${STORE.questions[STORE.questionNumber].answer}</p>
+          ${appendImage()}
           <button class= "answerButton" type="submit">Next</button>
         </legend>
       </fieldset>
@@ -123,8 +125,19 @@ function getResultHtml(val) {
   }
 }
 
+function appendImage() {
+  let key = STORE.questions[STORE.questionNumber].answer;
+  console.log(`
+  <img src=${STORE.images.get(key)} alt=${key}>
+`);
+  return `
+    <img class='answerImage' src=${STORE.images.get(key)} alt=${key}>
+  `;
+}
+
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
+  console.log(result);
   $('.main').html(result);
 }
 

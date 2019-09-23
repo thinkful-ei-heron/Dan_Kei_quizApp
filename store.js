@@ -5,8 +5,8 @@ const STORE = {
   questions: [
     {
       question: 'What player set the record for the most touchdowns scored in a half with 5?',
-      options: ['Jerry Rice', 'Randy Moss', 'Shawn Alexander', 'Don Hutson'],
-      answer: 'Shawn Alexander'
+      options: ['Jerry Rice', 'Randy Moss', 'Shaun Alexander', 'Don Hutson'],
+      answer: 'Shaun Alexander'
     },
     {
       question: 'What player set the record for the most receptions in one season with 143 catches?',
@@ -53,5 +53,20 @@ const STORE = {
       options: ['Michael Irvin', 'Randy Moss', 'Terrell Owens', 'Jerry Rice'],
       answer: 'Jerry Rice'
     }
-  ]
+  ],
+  images: new Map(),
+  mapImages: function() {
+    this.images.set('Jerry Rice', 'images/jerryRice.jpg');
+    this.images.set('Emmitt Smith', 'images/emmittSmith.jpg');
+    this.images.set('Michael Strahan', 'images/michaelStrahan.jpg');
+    this.images.set('Calvin Johnson', 'images/calvinJohnson.jpg');
+    this.images.set('Brett Favre', 'images/brettFavre.jpg');
+    this.images.set('Nick Foles', 'images/nickFoles.jpg');
+    this.images.set('Brandon Marshall', 'images/brandonMarshall.jpg');
+    this.images.set('Marvin Harrison', 'images/marvinHarrison.jpg');
+    this.images.set('Shaun Alexander', 'images/shaunAlexander.jpg');
+  }
 };
+
+STORE.mapImages();
+console.log(STORE.images);

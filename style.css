@@ -95,6 +95,12 @@ button {
   margin: 0 12px;
 }
 
+.main .answerImage {
+  margin: 15px auto;
+  width: 200px;
+  height: auto;
+}
+
 .main form button {
   width: 100px;
   margin: 0 auto;
