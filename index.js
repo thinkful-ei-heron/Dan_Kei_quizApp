@@ -127,9 +127,6 @@ function getResultHtml(val) {
 
 function appendImage() {
   let key = STORE.questions[STORE.questionNumber].answer;
-  console.log(`
-  <img src=${STORE.images.get(key)} alt=${key}>
-`);
   return `
     <img class='answerImage' src=${STORE.images.get(key)} alt=${key}>
   `;
@@ -137,7 +134,6 @@ function appendImage() {
 
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
-  console.log(result);
   $('.main').html(result);
 }
 
