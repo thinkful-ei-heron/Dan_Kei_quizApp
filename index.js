@@ -91,7 +91,8 @@ function getResultHtml(val) {
     <form id='resultForm'>
       <fieldset>
         <legend class="questionText">
-          <p>Your answer was ${val}: you were ${result}</p>
+          <p>Your answer was ${val}</p>
+          <p>You were ${result}!</p>
           <button type="submit">Next</button>
         </legend>
       </fieldset>
@@ -107,7 +108,7 @@ function displayAnswerPage(val) {
 
 //event handler to display next question
 function resultToQuestion() {
-  $('.main').on('submit', '#resultForm', function(event) {
+  $('.main').on('submit', '#resultForm', function() {
     if (STORE.questionNumber === STORE.questions.length) displayFinalResults();
     else generateQuestion();
   });
