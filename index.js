@@ -23,7 +23,8 @@ function startQuiz() {
 }
 
 function generateQuestion() {
-  let html = renderQuestionHtml() + renderOptionsHtml() + '<button type="submit">Submit</button></form>';
+  let html =
+    renderQuestionHtml() + renderOptionsHtml() + '<button type="submit">Submit</button></form></div>';
   $('.main').html(html);
 }
 
@@ -31,6 +32,9 @@ function renderQuestionHtml() {
   //this is the question text
   const questionText = STORE.questions[STORE.questionNumber].question;
   return `
+  <div class="formContainer">
+    <p class="questionNumber">Question: ${STORE.questionNumber}/10</p>
+    <p class="score">Score: ${STORE.score}</p>
     <form id='answerForm'>
     <fieldset>
       <legend class="questionText">
@@ -46,7 +50,7 @@ function renderOptionsHtml() {
   let ans = 1;
   optionsText.forEach(element => {
     optionsHtml += `
-    <div>
+    <div class="answerContainer">
       <input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required/>
       <label for="ans${ans}" ><span>${element}</span></label>
     </div>
@@ -81,14 +85,18 @@ function checkAnswer(val) {
 function getResultHtml(val) {
   let result = checkAnswer(val);
   return `
-  <form id='resultForm'>
-  <fieldset>
-    <legend class="questionText">
-    <p>Your answer was ${val}: you were ${result}</p>
-    <button type="submit">Next</button>
-    </legend>
-  </fieldset>
-  </form>
+  <div class="formContainer">
+    <p class="questionNumber">Question: ${STORE.questionNumber}/10</p>
+    <p class="score">Score: ${STORE.score}</p>
+    <form id='resultForm'>
+      <fieldset>
+        <legend class="questionText">
+          <p>Your answer was ${val}: you were ${result}</p>
+          <button type="submit">Next</button>
+        </legend>
+      </fieldset>
+    </form>
+  </div>
   `;
 }
 
@@ -106,26 +114,28 @@ function resultToQuestion() {
 }
 
 //function to create final results page html
-function generateFinalResultsHtml(){
+function generateFinalResultsHtml() {
   return `
-  <form id='finalResultForm'>
-  <fieldset>
-    <legend class="questionText">
-    <p>Your final score was ${STORE.score}/10.</p>
-    <button type="submit">Home</button>
-    </legend>
-  </fieldset>
-  </form>
+  <div class="formContainer">
+    <form id='finalResultForm'>
+      <fieldset>
+        <legend class="questionText">
+        <p>Your final score was ${STORE.score}/10.</p>
+        <button type="submit">Restart Quiz</button>
+        </legend>
+      </fieldset>
+    </form>
+  </div>
   `;
 }
 
-function displayFinalResults(){
+function displayFinalResults() {
   let html = generateFinalResultsHtml();
   $('main').html(html);
 }
 
 //function to restart quiz
-function restartQuiz(){
+function restartQuiz() {
   $('.main').on('submit', '#finalResultForm', function(event) {
     event.preventDefault();
     STORE.questionNumber = 0;
