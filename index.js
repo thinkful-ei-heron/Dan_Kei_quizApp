@@ -11,8 +11,10 @@ function main() {
 
 function loadLanding() {
   $('.main').html(
-    `<h3>Test your knowledge on NFL record holders!</h3>
-    <button type="button" class="startButton">Start the quiz</button>`
+    `<div aria-live= "polite" class ="startScreen">
+    <h2>Test your knowledge on NFL record holders!</h3>
+    <button type="button" class="startButton">Start The Quiz</button>
+    </div>`
   );
 }
 
@@ -32,8 +34,8 @@ function renderQuestionHtml() {
   //this is the question text
   const questionText = STORE.questions[STORE.questionNumber].question;
   return `
-  <div class="formContainer">
-    <p class="questionNumber">Question: ${STORE.questionNumber}/10</p>
+  <div aria-live= "polite" class="formContainer">
+    <p class="questionNumber">Question: ${(1+STORE.questionNumber)}/10</p>
     <p class="score">Score: ${STORE.score}</p>
     <form id='answerForm'>
     <fieldset>
@@ -50,10 +52,8 @@ function renderOptionsHtml() {
   let ans = 1;
   optionsText.forEach(element => {
     optionsHtml += `
-    <div class="answerContainer">
-      <input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required/>
-      <label for="ans${ans}" ><span>${element}</span></label>
-    </div>
+    <label aria-live= "polite" class="answerContainer" for="ans${ans}"><input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required>
+    <span>${element}</span></input></label>
     `;
     ans++;
   });
@@ -84,21 +84,43 @@ function checkAnswer(val) {
 
 function getResultHtml(val) {
   let result = checkAnswer(val);
-  return `
-  <div class="formContainer">
-    <p class="questionNumber">Question: ${STORE.questionNumber}/10</p>
+  if (result=== 'correct'){
+    return `
+    <div aria-live= "polite" class="formContainer">
+      <p class="questionNumber">Question: ${(STORE.questionNumber+1)}/10</p>
+      <p class="score">Score: ${STORE.score}</p>
+      <form id='resultForm'>
+        <fieldset>
+          <legend class="questionText">
+            <p>Your answer was:</p> 
+            <p>${val}</p>
+            <p>You were ${result}!</p>
+            <button class= "answerButton" type="submit">Next</button>
+          </legend>
+        </fieldset>
+      </form>
+    </div>
+    `;
+  } else {
+    return `
+  <div aria-live= "polite" class="formContainer">
+    <p class="questionNumber">Question: ${(STORE.questionNumber+1)}/10</p>
     <p class="score">Score: ${STORE.score}</p>
     <form id='resultForm'>
       <fieldset>
         <legend class="questionText">
-          <p>Your answer was ${val}</p>
+          <p>Your answer was:</p> 
+          <p>${val}</p>
           <p>You were ${result}!</p>
-          <button type="submit">Next</button>
+          <p>The correct answer was:</p>
+          <p>${STORE.questions[STORE.questionNumber].answer}</p>
+          <button class= "answerButton" type="submit">Next</button>
         </legend>
       </fieldset>
     </form>
   </div>
   `;
+  }
 }
 
 function displayAnswerPage(val) {
@@ -117,7 +139,7 @@ function resultToQuestion() {
 //function to create final results page html
 function generateFinalResultsHtml() {
   return `
-  <div class="formContainer">
+  <div aria-live= "polite" class="formContainer">
     <form id='finalResultForm'>
       <fieldset>
         <legend class="questionText">
@@ -141,6 +163,6 @@ function restartQuiz() {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.score = 0;
-    generateQuestion();
+    main();
   });
 }
