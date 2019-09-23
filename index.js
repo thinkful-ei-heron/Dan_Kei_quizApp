@@ -49,7 +49,7 @@ function renderOptionsHtml() {
   optionsText.forEach(element => {
     optionsHtml += `
     <div>
-      <input name="ansGroup" id="ans${ans}" type="radio" value ="${element}"/>
+      <input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required/>
       <label for="ans${ans}" ><span>${element}</span></label>
     </div>
     `;
@@ -69,6 +69,7 @@ function submitAnswer() {
     text = $('input:checked').val();
     console.log(text);
     displayAnswerPage(text);
+    STORE.questionNumber++;
     //doesn't need to return anymore
   });
 }
@@ -85,11 +86,11 @@ function getResultHtml(val) {
   let result = checkAnswer(val);
   console.log('result');
   return `
-  <form id='answerForm'>
+  <form id='resultForm'>
   <fieldset>
     <legend class="questionText">
     <p>Your answer was ${val}: you were ${result}</p>
-    <button type="submit">Submit</button>
+    <button type="submit">Next</button>
     </legend>
   </fieldset>
   </form>
@@ -98,17 +99,19 @@ function getResultHtml(val) {
 
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
-  console.log('in display answer page');
+  console.log(result);
   $('.main').html(result);
+  console.log('post injection');
 }
 
 //event handler to display next question
-function resultToQuestion(){
-  $('.main').on('submit', '#answerForm', function(event) {
+function resultToQuestion() {
+  $('.main').on('submit', '#resultForm', function(event) {
     console.log('from result to question');
-    generateQuestion();
+    if (STORE.question === STORE.questions.length - 1) generateFinalResults();
+    else generateQuestion();
   });
 }
-//function to create final results page 
+//function to create final results page
 
 //function to restart quiz

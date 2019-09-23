@@ -1,6 +1,6 @@
 'use strict';
 const STORE = {
-  questionNumber: 1,
+  questionNumber: 0,
   score: 0,
   questions: [
     {
