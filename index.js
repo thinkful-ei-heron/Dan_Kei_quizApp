@@ -6,9 +6,7 @@ function main() {
   startQuiz();
   submitAnswer();
   resultToQuestion();
-  //on click of next button
-  //if there are more questions: generateQuestion(), and then after that, submitAnswer()
-  //if there are no more question: display final results
+  restartQuiz();
 }
 
 function loadLanding() {
@@ -60,14 +58,11 @@ function renderOptionsHtml() {
 
 //consider changing the name of this to match what it's actually doing
 function submitAnswer() {
-  console.log('In submitAnswer');
   let text;
   $('.main').on('submit', '#answerForm', function(event) {
-    console.log('Form submitted');
     // this stops the default form submission behavior
     event.preventDefault();
     text = $('input:checked').val();
-    console.log(text);
     displayAnswerPage(text);
     STORE.questionNumber++;
     //doesn't need to return anymore
@@ -76,6 +71,7 @@ function submitAnswer() {
 
 function checkAnswer(val) {
   if (val === STORE.questions[STORE.questionNumber].answer) {
+    STORE.score++;
     return 'correct';
   } else {
     return 'wrong';
@@ -84,7 +80,6 @@ function checkAnswer(val) {
 
 function getResultHtml(val) {
   let result = checkAnswer(val);
-  console.log('result');
   return `
   <form id='resultForm'>
   <fieldset>
@@ -99,19 +94,42 @@ function getResultHtml(val) {
 
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
-  console.log(result);
   $('.main').html(result);
-  console.log('post injection');
 }
 
 //event handler to display next question
 function resultToQuestion() {
   $('.main').on('submit', '#resultForm', function(event) {
-    console.log('from result to question');
-    if (STORE.question === STORE.questions.length - 1) generateFinalResults();
+    if (STORE.questionNumber === STORE.questions.length) displayFinalResults();
     else generateQuestion();
   });
 }
-//function to create final results page
+
+//function to create final results page html
+function generateFinalResultsHtml(){
+  return `
+  <form id='finalResultForm'>
+  <fieldset>
+    <legend class="questionText">
+    <p>Your final score was ${STORE.score}/10.</p>
+    <button type="submit">Home</button>
+    </legend>
+  </fieldset>
+  </form>
+  `;
+}
+
+function displayFinalResults(){
+  let html = generateFinalResultsHtml();
+  $('main').html(html);
+}
 
 //function to restart quiz
+function restartQuiz(){
+  $('.main').on('submit', '#finalResultForm', function(event) {
+    event.preventDefault();
+    STORE.questionNumber = 0;
+    STORE.score = 0;
+    generateQuestion();
+  });
+}
