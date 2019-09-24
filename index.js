@@ -3,12 +3,12 @@ $(main);
 
 function main() {
   loadLanding();
-  //startQuiz();
   submitAnswer();
   resultToQuestion();
   restartQuiz();
 }
 
+//loadLanding() injects landing page HTML into main, then starts quiz
 function loadLanding() {
   $('.main').html(
     `<div aria-live= "polite" class ="startScreen">
@@ -19,20 +19,22 @@ function loadLanding() {
   startQuiz();
 }
 
+//startQuiz() is an event handler that generate and displays questions on click
 function startQuiz() {
   $('.startButton').click(function() {
     generateQuestion();
   });
 }
 
+//generateQuestion() injects question and answer options and submit button HTML into main
 function generateQuestion() {
   let html =
     renderQuestionHtml() + renderOptionsHtml() + '<button type="submit">Submit</button></form></div>';
   $('.main').html(html);
 }
 
+//renderQuestionHtml() generate the HTML string to display question text that will be injected into main based on question number
 function renderQuestionHtml() {
-  //this is the question text
   const questionText = STORE.questions[STORE.questionNumber].question;
   return `
   <div aria-live= "polite" class="formContainer">
@@ -47,6 +49,8 @@ function renderQuestionHtml() {
   `;
 }
 
+
+//renderQuestionHtml() generate the HTML string to display the answer options that will be injected into main based on question number
 function renderOptionsHtml() {
   const optionsText = STORE.questions[STORE.questionNumber].options;
   let optionsHtml = '';
@@ -61,19 +65,18 @@ function renderOptionsHtml() {
   return optionsHtml;
 }
 
-//consider changing the name of this to match what it's actually doing
+//subtmitAnswer() is an event handler that on submit checks the answer and injects HTML for the question results page
 function submitAnswer() {
   let text;
   $('.main').on('submit', '#answerForm', function(event) {
-    // this stops the default form submission behavior
     event.preventDefault();
     text = $('input:checked').val();
     displayAnswerPage(text);
     STORE.questionNumber++;
-    //doesn't need to return anymore
   });
 }
 
+//checkAnswer() passes the user-submitted answer selection and checks if it is correct against the STORE object
 function checkAnswer(val) {
   if (val === STORE.questions[STORE.questionNumber].answer) {
     STORE.score++;
@@ -83,6 +86,7 @@ function checkAnswer(val) {
   }
 }
 
+//getResultHtml() returns the question result HTML as a string, based on user's answer (correct/incorrect)
 function getResultHtml(val) {
   let result = checkAnswer(val);
   if (result === 'correct') {
@@ -124,6 +128,7 @@ function getResultHtml(val) {
   }
 }
 
+//appendImage() is a functional that returns the HTML necessary to display the correct answer on the question results page
 function appendImage() {
   let key = STORE.questions[STORE.questionNumber].answer;
   return `
@@ -131,12 +136,13 @@ function appendImage() {
   `;
 }
 
+//displayAnswerPage() takes the submitted answer parameter and injects HTML into main
 function displayAnswerPage(val) {
   let result = getResultHtml(val);
   $('.main').html(result);
 }
 
-//event handler to display next question
+//resultToQuestion() is an event handler that displays the next question text on submit, if last question has been displayed display final results
 function resultToQuestion() {
   $('.main').on('submit', '#resultForm', function() {
     event.preventDefault();
@@ -145,7 +151,7 @@ function resultToQuestion() {
   });
 }
 
-//function to create final results page html
+//generatelFinalResultsHtml creates final results page html
 function generateFinalResultsHtml() {
   let imgSrc;
   let grade;
@@ -158,12 +164,11 @@ function generateFinalResultsHtml() {
     imgSrc = 'images/risingStar.jpg';
   } else if (score >= 4) {
     grade = 'You are an NFL rookie!';
-    imgSrc = 'images/risingStar.jpg';
+    imgSrc = 'images/rookie.jpg';
   } else {
     grade = 'You are an NFL bust!';
     imgSrc = 'images/bust.jpg';
   }
-
   return `
   <div aria-live= "polite" class="formContainer">
     <form id='finalResultForm' class='finalResultForm'>
@@ -180,12 +185,13 @@ function generateFinalResultsHtml() {
   `;
 }
 
+//injects final results page HTML into main
 function displayFinalResults() {
   let html = generateFinalResultsHtml();
   $('main').html(html);
 }
 
-//function to restart quiz
+//function to restart quiz, runs loadLanding() to restart quiz
 function restartQuiz() {
   $('.main').on('submit', '#finalResultForm', function(event) {
     event.preventDefault();
