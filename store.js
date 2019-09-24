@@ -69,4 +69,3 @@ const STORE = {
 };
 
 STORE.mapImages();
-console.log(STORE.images);

@@ -3,7 +3,7 @@ $(main);
 
 function main() {
   loadLanding();
-  startQuiz();
+  //startQuiz();
   submitAnswer();
   resultToQuestion();
   restartQuiz();
@@ -16,6 +16,7 @@ function loadLanding() {
     <button type="button" class="startButton">Start The Quiz</button>
     </div>`
   );
+  startQuiz();
 }
 
 function startQuiz() {
@@ -37,7 +38,7 @@ function renderQuestionHtml() {
   <div aria-live= "polite" class="formContainer">
     <p class="questionNumber">Question: ${1 + STORE.questionNumber}/10</p>
     <p class="score">Score: ${STORE.score}</p>
-    <form id='answerForm'>
+    <form id='answerForm' class='answerForm'>
     <fieldset>
       <legend class="questionText">
         ${questionText}
@@ -52,7 +53,7 @@ function renderOptionsHtml() {
   let ans = 1;
   optionsText.forEach(element => {
     optionsHtml += `
-    <label aria-live= "polite" class="answerContainer" for="ans${ans}"><input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required>
+    <label aria-live= "polite" class="answerContainer ans${ans}" for="ans${ans}"><input name="ansGroup" id="ans${ans}" type="radio" value ="${element}" required>
     <span>${element}</span></input></label>
     `;
     ans++;
@@ -89,12 +90,11 @@ function getResultHtml(val) {
     <div aria-live= "polite" class="formContainer">
       <p class="questionNumber">Question: ${STORE.questionNumber + 1}/10</p>
       <p class="score">Score: ${STORE.score}</p>
-      <form id='resultForm'>
+      <form id='resultForm' class='resultForm'>
         <fieldset>
           <legend class="questionText">
-            <p>Your answer was:</p> 
-            <p>${val}</p>
-            <p>You were ${result}!</p>
+            <p><span class="resultText">That is ${result}!</span><br><br>
+            You answered ${val}.</p>
             ${appendImage()}
             <button class= "answerButton" type="submit">Next</button>
           </legend>
@@ -104,23 +104,22 @@ function getResultHtml(val) {
     `;
   } else {
     return `
-  <div aria-live= "polite" class="formContainer">
-    <p class="questionNumber">Question: ${STORE.questionNumber + 1}/10</p>
-    <p class="score">Score: ${STORE.score}</p>
-    <form id='resultForm'>
-      <fieldset>
-        <legend class="questionText">
-          <p>Your answer was:</p> 
-          <p>${val}</p>
-          <p>You were ${result}!</p>
-          <p>The correct answer was:</p>
-          <p>${STORE.questions[STORE.questionNumber].answer}</p>
-          ${appendImage()}
-          <button class= "answerButton" type="submit">Next</button>
-        </legend>
-      </fieldset>
-    </form>
-  </div>
+    <div aria-live= "polite" class="formContainer">
+      <p class="questionNumber">Question: ${STORE.questionNumber + 1}/10</p>
+      <p class="score">Score: ${STORE.score}</p>
+      <form id='resultForm' class='resultForm'>
+        <fieldset>
+          <legend class="questionText">
+            <p><span class="resultText">That is ${result}!</span><br><br>
+            You answered ${val}.<br>
+            The correct answer is
+            ${STORE.questions[STORE.questionNumber].answer}.</p>
+            ${appendImage()}
+            <button class= "answerButton" type="submit">Next</button>
+          </legend>
+        </fieldset>
+      </form>
+    </div>
   `;
   }
 }
@@ -140,6 +139,7 @@ function displayAnswerPage(val) {
 //event handler to display next question
 function resultToQuestion() {
   $('.main').on('submit', '#resultForm', function() {
+    event.preventDefault();
     if (STORE.questionNumber === STORE.questions.length) displayFinalResults();
     else generateQuestion();
   });
@@ -147,12 +147,31 @@ function resultToQuestion() {
 
 //function to create final results page html
 function generateFinalResultsHtml() {
+  let imgSrc;
+  let grade;
+  let score = STORE.score;
+  if (score >= 8) {
+    grade = 'You are an NFL legend!';
+    imgSrc = 'images/legend.jpg';
+  } else if (score >= 6) {
+    grade = 'You are a rising star!';
+    imgSrc = 'images/risingStar.jpg';
+  } else if (score >= 4) {
+    grade = 'You are an NFL rookie!';
+    imgSrc = 'images/risingStar.jpg';
+  } else {
+    grade = 'You are an NFL bust!';
+    imgSrc = 'images/bust.jpg';
+  }
+
   return `
   <div aria-live= "polite" class="formContainer">
-    <form id='finalResultForm'>
+    <form id='finalResultForm' class='finalResultForm'>
       <fieldset>
         <legend class="questionText">
-        <p>Your final score was ${STORE.score}/10.</p>
+        <p>Final score: ${score}/10.<br><br><br>
+        ${grade}</p>
+        <img src="${imgSrc}" alt="grade">
         <button type="submit">Restart Quiz</button>
         </legend>
       </fieldset>
@@ -172,6 +191,6 @@ function restartQuiz() {
     event.preventDefault();
     STORE.questionNumber = 0;
     STORE.score = 0;
-    main();
+    loadLanding();
   });
 }

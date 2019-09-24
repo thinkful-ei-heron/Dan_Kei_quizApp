@@ -1,21 +1,21 @@
+* {
+  overflow: hidden;
+}
+
 body {
-  /*background-image: url('/images/Catch.jpg'); 
-  */
+  width: 100%;
+  height: 100vh;
   background-color: black;
   color: white;
   font-family: 'Roboto', sans-serif;
-}
-
-button {
-  background-color: #da2127;
-  color: white;
-  font-family: 'Roboto Slab', sans-serif;
-  border: 0;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(images/catch_mobile.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .banner {
   width: 100%;
-  margin-bottom: 25px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,27 +23,74 @@ button {
 }
 
 .banner img {
-  width: 100px;
+  width: 80px;
   height: auto;
 }
 
 .banner h1 {
   width: 100%;
-  margin: 0 auto;
+  margin: 0px auto;
   text-align: center;
   font-family: 'Roboto Slab', serif;
-  font-size: 30px;
+  font-size: 36px;
+  font-weight: bold;
   color: white;
 }
 
+.main {
+  height: 515px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main h2 {
+  margin-bottom: 100px;
+  width: 250px;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 30px;
+}
+
+button {
+  background-color: #da2127;
+  color: white;
+  font-family: 'Roboto Slab', sans-serif;
+  border: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .main .startButton {
-  font-family: 'Roboto Slab', serif;
+  width: 250px;
+  height: 75px;
+  margin-bottom: 70px;
+  border-radius: 30px;
+  font-size: 28px;
+}
+
+.main .startScreen {
+  margin-top: 150px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.startScreen button {
+  width: 180px;
+  font-size: 20px;
+  margin: 10px;
+  border-radius: 13px;
 }
 
 .main .formContainer {
   position: relative;
   width: 80%;
-  height: 100%;
+  height: 390px;
   margin: 0 auto;
   padding-top: 50px;
   padding-bottom: 25px;
@@ -53,23 +100,31 @@ button {
 
 .main form {
   width: 100%;
-  height: 400px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.main form button {
+  width: 130px;
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 20px;
+  border-radius: 13px;
+}
+
 .main .questionNumber {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
 }
 
 .main .score {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
 }
 
 .main .questionText {
@@ -84,8 +139,6 @@ button {
   align-items: center;
   height: 60px;
   width: 220px;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 12px;
   background-color: #003a73;
   color: white;
@@ -96,38 +149,156 @@ button {
 }
 
 .main .answerImage {
-  margin: 15px auto;
-  width: 200px;
-  height: auto;
+  margin-top: 20px;
+  margin-bottom: 45px;
+  width: 220px;
 }
 
-.main form button {
-  width: 100px;
-  margin: 0 auto;
-  padding: 10px;
-  font-size: 20px;
-  color: white;
-  background-color: #da2127;
-  border: 0;
-  border-radius: 13px;
-  font-family: 'Roboto Slab', serif;
-}
-
-.main .resultText {
-  color: #da2127;
-}
-
-.main .startScreen {
+.main legend {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
-.startScreen button {
-  width: 180px;
+.main .resultForm p {
+  line-height: 22px;
+  color: black;
+}
+
+.main .resultText {
+  font-size: 22px;
+  font-weight: bold;
+  color: #da2127;
+}
+
+.main .finalResultForm p {
+  margin-bottom: 50px;
   font-size: 20px;
-  margin: 10px;
-  border-radius: 13px;
+  font-weight: bold;
+  color: black;
+}
+
+.main .finalResultForm button {
+  width: 180px;
+}
+
+.main .finalResultForm img {
+  margin-bottom: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 220px;
+  height: auto;
+}
+
+@media (min-width: 1023px) {
+  body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(images/Catch.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .banner {
+    width: 550px;
+    height: 150px;
+    margin: 0 auto;
+    flex-direction: row;
+  }
+
+  .banner img {
+    margin-top: 10px;
+    margin-left: 50px;
+  }
+
+  .banner h1 {
+    font-size: 44px;
+  }
+
+  .main {
+    height: 80%;
+  }
+
+  .main h2 {
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 150px;
+    font-size: 30px;
+  }
+
+  .main .formContainer {
+    width: 700px;
+  }
+
+  .main .answerForm {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    row-gap: 15px;
+    column-gap: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main .answerForm fieldset {
+    grid-row: 1/4;
+    grid-column: 2/8;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
+  }
+
+  .main .answerForm legend {
+    height: 90px;
+  }
+
+  .main .answerForm .answerContainer {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+  }
+
+  .main .answerForm .ans1 {
+    grid-row: 4/7;
+    grid-column: 2/5;
+  }
+
+  .main .answerForm .ans2 {
+    grid-row: 4/7;
+    grid-column: 5/8;
+  }
+
+  .main .answerForm .ans3 {
+    grid-row: 7/10;
+    grid-column: 2/5;
+  }
+
+  .main .answerForm .ans4 {
+    grid-row: 7/10;
+    grid-column: 5/8;
+  }
+
+  .main .answerForm button {
+    justify-self: center;
+    grid-row: 10/13;
+    grid-column: 4/6;
+  }
+
+  .main .answerImage {
+    width: 320px;
+    margin-bottom: 25px;
+  }
+
+  .main .finalResultForm {
+    margin-top: -10px;
+  }
+
+  .main .finalResultForm p {
+    margin-bottom: 25px;
+  }
+
+  .main .finalResultForm img {
+    margin-top: 10px;
+    margin-bottom: 35px;
+    width: 320px;
+  }
 }
