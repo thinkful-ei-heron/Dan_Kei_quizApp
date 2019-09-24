@@ -1,9 +1,10 @@
-* {
+html,
+body {
   overflow: hidden;
 }
 
 body {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-color: black;
   color: white;
@@ -293,7 +294,8 @@ button {
   }
 
   .main .finalResultForm p {
-    margin-bottom: 25px;
+    height: 100px;
+    margin-bottom: 10px;
   }
 
   .main .finalResultForm img {
